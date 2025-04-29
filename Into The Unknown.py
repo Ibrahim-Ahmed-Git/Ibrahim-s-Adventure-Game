@@ -13,14 +13,14 @@ def introduction():
     print("3. Climb the rocky hill")
     print("4. Return home")
 
-# Create conditions to terminate the program
+# Check if the player's health is 0 or less to terminate the game
 def check_game_over(health):
     if health <= 0:
         print("\nYou've been defeated!😔 Game over.")
         return True
     return False
 
-# Use a conditional loop to handle invalid input
+# Get user input and handle invalid responses using a loop
 def get_choice(prompt, options):
     while True:
         choice = input(prompt).strip().lower()
@@ -29,27 +29,31 @@ def get_choice(prompt, options):
         else:
             print("Invalid input. Please try again.")
 
-# Game logic
+# Main adventure game logic
 def adventure_game():
-    inventory = []
-    health = 100
-    gold = 0
+    inventory = []  # Store items the player collects
+    health = 100    # Player starts with full health
+    gold = 0        # Player starts with no gold
 
     while True:
-        introduction()
-        
+        introduction()  # Show game intro and options
+
+        # Ask the player for their choice of action
         choice = get_choice("\nWhat do you choose? (1/2/3/4): ", ["1", "2", "3", "4"])
 
         if choice == "1":
+            # Dark forest path
             print("\nYou venture into the dark forest...")
             time.sleep(1)
             print("The trees loom overhead, blocking most of the sunlight.")
             time.sleep(1)
             print("Suddenly, you encounter a giant bear!")
-            
+
+            # Player chooses how to deal with the bear
             action = get_choice("Do you fight (f), run (r), or try to sneak past (s)? ", ["f", "r", "s"])
-            
+
             if action == "f":
+                # Fighting the bear
                 if "magical sword" in inventory:
                     print("\nWith your magical sword, you defeat the bear easily!")
                     print("Behind it, you find a treasure chest with 50 gold!")
@@ -65,6 +69,7 @@ def adventure_game():
                     gold += 20
 
             elif action == "r":
+                # Running away from the bear
                 print("\nYou run away quickly, but trip on a root!")
                 damage = random.randint(5, 15)
                 health -= damage
@@ -80,6 +85,7 @@ def adventure_game():
                     print("\nYou continue walking and find nothing else.")
 
             elif action == "s":
+                # Sneaking past the bear
                 sneak_chance = random.randint(1, 10)
                 if sneak_chance > 3:
                     print("\nYou successfully sneak past the bear!")
@@ -94,12 +100,14 @@ def adventure_game():
                         break
 
         elif choice == "2":
+            # River path
             print("\nYou walk along the river...")
             time.sleep(1)
             print("The water is crystal clear and you hear birds singing.")
             time.sleep(1)
             print("You see a shining object in the water.")
-            
+
+            # Choice to pick up the item
             pick = get_choice("Do you pick it up? (yes/no): ", ["yes", "no"])
             if pick == "yes":
                 print("\nIt's a magical sword! You feel powerful!")
@@ -132,12 +140,14 @@ def adventure_game():
                     print("You decline and continue your journey.")
 
         elif choice == "3":
+            # Rocky hill path
             print("\nYou climb the rocky hill...")
             time.sleep(1)
             print("The climb is strenuous but rewarding.")
             time.sleep(1)
             print("At the top, you find a wise old man meditating.")
-            
+
+            # Talk to the old man
             talk = get_choice("Do you talk to him? (yes/no): ", ["yes", "no"])
             if talk == "yes":
                 print("\nHe opens his eyes slowly and smiles.")
@@ -170,6 +180,7 @@ def adventure_game():
                         inventory.append("rare gem")
 
         elif choice == "4":
+            # Player chooses to return home
             print("\nYou decide it's safer to return home.")
             take = get_choice("You find a purse on the road. Take it? (yes/no): ", ["yes", "no"])
             if take == "yes":
@@ -178,21 +189,23 @@ def adventure_game():
                 print(f"You find {gold_found} gold inside!")
             else:
                 print("You leave it and continue home.")
-            break  # terminate the game after going home
+            break  # Game ends here
 
-        # Final summary after each adventure loop
+        # Show summary of current status
         print("\n=== Adventure Summary ===")
         print(f"Health: {health}")
         print(f"Gold: {gold}")
         print("Inventory:", ", ".join(inventory) if inventory else "Empty")
 
+        # Check if health reached zero
         if check_game_over(health):
             break
 
+        # Ask the player if they want to continue playing
         continue_game = get_choice("\nWould you like to continue your adventure? (yes/no): ", ["yes", "no"])
         if continue_game == "no":
             print("\nYou return home, your adventure complete!")
             break
 
+# Run the game
 adventure_game()
-
