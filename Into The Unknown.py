@@ -35,6 +35,9 @@ def adventure_game():
     health = 100    # Player starts with full health
     gold = 0        # Player starts with no gold
 
+    turns = 0       # Track number of turns
+    max_turns = 5   # Maximum number of turns allowed
+
     while True:
         introduction()  # Show game intro and options
 
@@ -197,8 +200,14 @@ def adventure_game():
         print(f"Gold: {gold}")
         print("Inventory:", ", ".join(inventory) if inventory else "Empty")
 
-        # Check if health reached zero
         if check_game_over(health):
+            break
+
+        # Turn-based ending logic
+        turns += 1
+        print(f"\nTurn {turns}/{max_turns}")
+        if turns >= max_turns:
+            print("\nYou've reached the end of your adventure due to time limits!")
             break
 
         # Ask the player if they want to continue playing
